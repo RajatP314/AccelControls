@@ -9,7 +9,7 @@ let socket = io();
 console.log(socket);
 
 window.addEventListener('deviceorientation', (event)=>{
-	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma;
+	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma + <br /> + event;
 	socket.emit('move', event);
 	return false;
 });
