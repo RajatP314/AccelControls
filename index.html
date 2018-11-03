@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;" width="600" height="600"></canvas>
+		<canvas style="background-color:white;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -52,6 +52,7 @@ class Player{
 		this.color = color;
 	}
 	draw(ctx){
+		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x, this.y, 40, 40);
 	}
 }
