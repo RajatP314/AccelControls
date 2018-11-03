@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -151,7 +151,7 @@ class Player{
 		if(this.chargeStart){
 			ctx.globalAlpha = 0.2;
 			ctx.fillStyle = "black";
-			ctx.fillRect(this.x, this.y, 40, 40*chargeTime/chargeTimer);
+			ctx.fillRect(this.x, this.y, 40, 40*this.chargeTime/this.chargeTimer);
 			ctx.globalAlpha = 1;
 		}
 	}
