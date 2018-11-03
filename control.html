@@ -1,0 +1,30 @@
+<html>
+	<body style="margin:0px;">
+		<p id="output">...</p>
+		<script src="/socket.io/socket.io.js"></script>
+
+		<script>
+
+let socket = io();
+console.log(socket);
+let c = document.querySelector('canvas');
+c.ontouchstart = c.onmousedown = ()=>{
+	socket.emit('keyin', parseInt(location.search.substring(1).split("=")[1]));
+	return false;
+}
+
+c.ontouchend = c.onmouseup = ()=>{
+         socket.emit('keyout', parseInt(location.search.substring(1).split("=")[1]));
+         return false;
+}
+window.addEventListener('devicemotion', (event)=>{
+	document.getElementById('output').innerHTML =
+	`${event.acceleration.x}<br />
+	${event.acceleration.y}<br />
+	${event.acceleration.z}`;
+})
+
+		</script>
+
+	</body>
+</html>

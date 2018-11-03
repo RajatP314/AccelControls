@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Game</title>
+	</head>
+	<body style="margin:0px;">
+		<canvas></canvas>
+		<script>
+
+var  c = document.querySelector('canvas');
+c.width = window.innerWidth*0.98;
+c.height = window.innerHeight*0.98;
+
+var f = c.getContext('2d');
+
+var keyList = [];
+console.log(keyList);
+window.onkeydown = (event)=>{
+	let key = event.which || event.keyCode;
+	alert(key);
+}
+
+window.onkeyup = (event)=>{
+	let key = event.which || event.keyCode;
+	alert(key);
+}
+
+		</script>
+		<script>
+class Player{
+	constructor(x, y, w, h){
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		this.xv = 0;
+		this.yv = 0;
+	}
+
+		
+	draw(ctx){
+		ctx.fillRect(this.x, this.y, this.w, this.h);
+	}
+
+	controls(keyList){
+		if(keyList[39]){
+			this.xv = 10;
+		}
+		if(keyList[37]){
+			this.xv = -10;
+		}
+	}
+
+	doKinematics(){
+		this.xpos += this.xv;
+		this.ypos += this.yv;
+		this.xv *= 0.9;
+		this.yv *= 0.9;
+	}
+
+}
+		</script>
+		<script>
+
+let bob = new Player(200, 200, 30, 30);
+
+let gl = setInterval(loop, 1000/50);
+
+function loop(){
+	f.clearRect(0,0,c.width, c.height);
+	bob.controls(keyList);
+	bob.doKinematics();
+	bob.draw();
+}
+
+		</script>
+	</body>
+</html>
