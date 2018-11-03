@@ -3,11 +3,13 @@ let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 console.log(io);
+let playerCount = 0;
 app.all('/', (req, res)=>{
 	res.sendFile(__dirname + "/index.html");
 });
 
 app.get('/control.html', (req, res)=>{
+	playerCount++;
 	res.sendFile(__dirname + "/control.html");
 });
 
@@ -18,8 +20,10 @@ app.get(/[0-9]+/, (req, res)=>{
 
 io.on('connection', (socket)=>{
 	console.log('User connected');
+	io.emit('newplayer', playerCount-1);
 	socket.on('disconnect', (socket)=>{
 		console.log('User disconnected');
+		io.emit('dcplayer', playerCount-1);
 	});
 	socket.on('keyin', (n)=>{
 		io.emit('keyin', n);

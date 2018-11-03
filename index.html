@@ -16,28 +16,25 @@
 let c = document.querySelector('canvas');
 let f = c.getContext('2d');
 
-let x = y = 300;
-let xv = yv = 0;
-let xa = ya = 0;
-let maxXV = maxYV = 10;
+let playerList = [];
+
 			
 let socket = io();
-socket.on('keyin', (n)=>{
-	let e = new Event('keydown');
-	e.which = e.keyCode = n;
-	window.dispatchEvent(e);
+socket.on('newplayer', (n)=>{
+	if(playerList[n] === undefined){
+		playerList.push(new Player(300, 300, `hsl(${60*n}, 70%, 70%)` ));
+	}
 });
-socket.on('keyout', (n)=>{
-         let e = new Event('keyup');
-         e.which = e.keyCode = n;
-         window.dispatchEvent(e);
+
+socket.on('dcplayer', (n)=>{
+	playerList[n] = null;
 });
+
 socket.on('move', (n)=>{
-	//console.log(n);
 	let yAngle = n.y;
 	if(yAngle > 90){yAngle = 90};
 	if(yAngle < -90){yAngle = -90};
-	y = 300 - yAngle*300/90;
+	playerList[n.key].y = 300 - yAngle*300/90;
 	let xAngle = n.x;
 	if(xAngle > 90 && xAngle < 180){
 		xAngle = 90;
@@ -45,25 +42,27 @@ socket.on('move', (n)=>{
 		if(xAngle < 360 && xAngle > 180){xAngle -= 360};
 		if(xAngle < -90){xAngle = -90};
 	}
-	x = 300 - xAngle*300/90;
+	playerList[n.key].x = 300 - xAngle*300/90;
 });
+
+class Player{
+	constructor(x, y, color){
+		this.x = x;
+		this.y = y;
+		this.color = color;
+	}
+	draw(ctx){
+		ctx.fillRect(this.x, this.y, 40, 40);
+	}
+}
 
 function render(){
  f.clearRect(0, 0, 600, 600);
-if(Math.abs(yv) < maxYV){
- 	yv += ya
-}
-if(Math.abs(xv) < maxXV){
- xv += xa;
-}
- x += xv;
- y += yv;
-if(xa == 0 && ya == 0){
-	xv = 0;
-	yv = 0;
-}
-console.log(xa, ya, xv, yv);
- f.fillRect(x, y, 40, 40);
+ for(let p : playerList){
+	if(p !== null){
+		p.draw(f);
+	}
+ }
 }
 
 let loop = setInterval(render, 1000/60);
