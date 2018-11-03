@@ -8,9 +8,11 @@
 let socket = io();
 console.log(socket);
 
+let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
+
 window.addEventListener('deviceorientation', (event)=>{
 	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma;
-	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma});
+	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma, key:key});
 	return false;
 });
 
