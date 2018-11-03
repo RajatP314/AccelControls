@@ -36,6 +36,12 @@ io.on('connection', (socket)=>{
 	socket.on('newplayer', (n)=>{
 		io.emit('newplayer', n);	
 	});
+	socket.on('chargestart', (n)=>{
+		io.emit('chargestart', n);	
+	});
+	socket.on('chargestop', (n)=>{
+		io.emit('chargestop', n);	
+	});
 });
 
 http.listen((process.env.PORT || 8080), ()=>{
