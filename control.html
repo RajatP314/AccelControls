@@ -42,11 +42,11 @@ let chargeTimer = 0;
 let chargeTime = 150;
 let startCharge = false;
 			
-ontouchstart = (event)=>{
+ontouchstart = onmousedown = (event)=>{
 	startCharge = true;
 }
 
-ontouchend = (event)=>{
+ontouchend = onmouseup = (event)=>{
 	startCharge = false;
 	chargeTimer = 0;
 }
