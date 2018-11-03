@@ -97,9 +97,7 @@ let playerList = [];
 let socket = io();
 socket.on('newplayer', (n)=>{
 	console.log(n,"!!!!!");
-	if(playerList[n] === undefined || playerList[n] === null){
-		playerList[n] = new Player(300, 300, `hsl(${60*n}, 70%, 70%)` );
-	}
+	playerList[n] = new Player(300, 300, `hsl(${60*n}, 70%, 70%)` );
 	console.log(playerList[n]);
 });
 
