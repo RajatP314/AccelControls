@@ -36,6 +36,7 @@ let c = document.querySelector("canvas");
     let canvasElementStyle = window.getComputedStyle(c);
     c.width = parseInt(canvasElementStyle.width);
 c.height = parseInt(canvasElementStyle.height);
+let f = c.getContext('2d');
 
 let chargeTimer = 0;
 let chargeTime = 150;
@@ -61,6 +62,7 @@ function render(ctx){
 	} else {
 		f.fillStyle = "black";
 	}
+	f.fillRect(0, 0, c.width, c.height);
 }			
 		</script>
 
