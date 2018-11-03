@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:green;" width="600" height="600"></canvas>
+		<canvas style="background-color:white;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -32,9 +32,9 @@ socket.on('keyout', (n)=>{
          window.dispatchEvent(e);
 });
 socket.on('move', (n)=>{
-	console.log(n);
-	xv = parseFloat(n.x.toFixed(1));
-	ya = parseFloat(n.z.toFixed(1));
+	//console.log(n);
+	xv = Math.round(n.x);
+	ya = Math.round(n.z);
 });
 
 function render(){
