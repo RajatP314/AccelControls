@@ -42,7 +42,7 @@ socket.on('move', (n)=>{
 	if(xAngle < -90){xAngle = -90};
 	console.log(yAngle);
 	y = 300 - yAngle*300/90;
-	x = 300 + yAngle*300/90;
+	x = 300 + xAngle*300/90;
 });
 
 function render(){
