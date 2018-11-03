@@ -8,9 +8,9 @@
 let socket = io();
 console.log(socket);
 
-window.addEventListener('devicemotion', (event)=>{
-	document.getElementById('output').innerHTML = event.acceleration.x + "<br />" + event.acceleration.y + "<br />" + event.acceleration.z;
-	socket.emit('move', event.acceleration);
+window.addEventListener('deviceorientation', (event)=>{
+	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma;
+	socket.emit('move', event);
 	return false;
 });
 
