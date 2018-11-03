@@ -20,7 +20,6 @@ app.get(/[0-9]+/, (req, res)=>{
 
 io.on('connection', (socket)=>{
 	console.log('User connected');
-	io.emit('newplayer', playerCount-1);
 	socket.on('disconnect', (socket)=>{
 		console.log('User disconnected');
 		io.emit('dcplayer', playerCount-1);
@@ -33,6 +32,9 @@ io.on('connection', (socket)=>{
 	});
 	socket.on('move', (n)=>{
 		io.emit('move', n);	
+	});
+	socket.on('newplayer', (n)=>{
+		io.emit('newplayer', n);	
 	});
 });
 
