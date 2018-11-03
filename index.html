@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:cornflowerblue;" width="600" height="600"></canvas>
+		<canvas style="background-color:orange;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -34,7 +34,7 @@ socket.on('keyout', (n)=>{
 });
 socket.on('move', (n)=>{
 	console.log(n);
-	let yAngle = n.beta;
+	let yAngle = n.y;
 	if(yAngle > 90){yAngle = 90};
 	if(yAngle < -90){yAngle = -90};
 	console.log(yAngle);
