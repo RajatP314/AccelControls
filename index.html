@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;" width="600" height="600"></canvas>
+		<canvas style="background-color:pink;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -19,6 +19,7 @@ let f = c.getContext('2d');
 let x = y = 300;
 let xv = yv = 0;
 let xa = ya = 0;
+let maxXV = maxYV = 10;
 			
 let socket = io();
 socket.on('keyin', (n)=>{
@@ -33,14 +34,18 @@ socket.on('keyout', (n)=>{
 });
 socket.on('move', (n)=>{
 	//console.log(n);
-	xv = Math.round(n.x)/10;
+	xa = Math.round(n.x)/10;
 	ya = Math.round(n.z)/10;
 });
 
 function render(){
  f.clearRect(0, 0, 600, 600);
- yv += ya
+if(Math.abs(yv) < maxYV){
+ 	yv += ya
+}
+if(Math.abs(xv) < maxXV){
  xv += xa;
+}
  x += xv;
  y += yv;
 if(xa == 0 && ya == 0){
