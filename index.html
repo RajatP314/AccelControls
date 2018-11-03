@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;" width="600" height="600"></canvas>
+		<canvas style="background-color:gray;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -58,7 +58,7 @@ class Player{
 
 function render(){
  f.clearRect(0, 0, 600, 600);
- for(let p : playerList){
+ for(let p of playerList){
 	if(p !== null){
 		p.draw(f);
 	}
