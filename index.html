@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -150,7 +150,7 @@ class Player{
 	}
 	splash(){
 	for(let i=0;i<10;i++){
-		let power = 5*this.chargeTimer/this.chargeTime;
+		let power = 5*this.chargeTime/this.chargeTimer;
 	//	console.log(power);
 		let dx = power - Math.random()*2*power;
 		let dy = power - Math.random()*2*power;
@@ -176,6 +176,7 @@ class Player{
 function render(){
  f.clearRect(0, 0, 600, 600);
  for(let p of playerList){
+	 f.globalAlpha = 1;
 	if(p !== null){
 		p.update();
 		p.draw(f);
