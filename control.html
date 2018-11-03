@@ -28,12 +28,11 @@ let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
 socket.emit('newplayer', key);
 			
 window.addEventListener('deviceorientation', (event)=>{
-	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma;
 	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma, key:key});
 	return false;
 });
 			
-let c = document.getElementById("canvas");
+let c = document.querySelector("canvas");
     let canvasElementStyle = window.getComputedStyle(c);
     c.width = parseInt(canvasElementStyle.width);
 c.height = parseInt(canvasElementStyle.height);
