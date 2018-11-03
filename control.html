@@ -1,6 +1,6 @@
 <html>
 	<body style="margin:0px;">
-		<p id="output">asdfghjkl</p>
+		<p id="output" style="color:blue;">asdfghjkl</p>
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
@@ -9,7 +9,8 @@ let socket = io();
 console.log(socket);
 
 let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
-
+socket.emit('newplayer', key);
+			
 window.addEventListener('deviceorientation', (event)=>{
 	document.getElementById('output').innerHTML = event.alpha + "<br />" + event.beta + "<br />" + event.gamma;
 	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma, key:key});
