@@ -44,23 +44,26 @@ let startCharge = false;
 			
 ontouchstart = onmousedown = (event)=>{
 	startCharge = true;
+	console.log("start");
 }
 
 ontouchend = onmouseup = (event)=>{
 	startCharge = false;
 	chargeTimer = 0;
+	console.log("end");
 }
 
 let loop = setInterval(render, 1000/60);
 			
 function render(ctx){
 	if(startCharge){
-		f.fillStyle = `hsl(60*key, 70%, ${80*chargeTimer/chargeTime}%)`;
+		console.log("going");
+		f.fillStyle = `hsl(${60*key}, 70%, ${80*chargeTimer/chargeTime}%)`;
 		if(chargeTimer < chargeTime){
 			chargeTimer++;
 		}	
 	} else {
-		f.fillStyle = "black";
+		f.fillStyle = "green";
 	}
 	f.fillRect(0, 0, c.width, c.height);
 }			
