@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -28,7 +28,7 @@ canvas
 		<script>
 
 class Trail{
-	constructor(x, y, xv, yv, size, color){
+	constructor(x, y, xv, yv, size, color, owner){
 		this.x = x;
 		this.y = y;
 		this.size = this.maxSize = size;
@@ -40,6 +40,7 @@ class Trail{
 		this.age = 0;
 		this.imageList = [];
 		this.index;
+		this.owner = owner;
 	}
 	
 	draw(ctx){
@@ -124,11 +125,13 @@ socket.on('move', (n)=>{
 
 socket.on('chargestart', (n)=>{
 	playerList[n].chargeStart = true;
+	playerList[n].splash();
 });
 			
 socket.on('chargestop', (n)=>{
 	playerList[n.key].chargeStart = false;
 	playerList[n.key].chargeTime = 0;
+	
 });
 			
 class Player{
@@ -144,6 +147,19 @@ class Player{
 		if(this.chargeStart && this.chargeTime < this.chargeTimer){
 			this.chargeTime++;	
 		}
+	}
+	splash(){
+	for(let i=0;i<10;i++){
+		let power = 5*this.chargeTimer/this.chargeTime;
+	//	console.log(power);
+		let dx = power - Math.random()*2*power;
+		let dy = power - Math.random()*2*power;
+		let xv = 3*(power - Math.random()*2*power);
+		let yv = 6*(power - Math.random()*2*power);
+		let size = power*10;
+		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this).addToList());
+//		console.log(trailList);
+	}	
 	}
 	draw(ctx){
 		ctx.fillStyle = this.color;
@@ -165,6 +181,12 @@ function render(){
 		p.draw(f);
 	}
  }
+	for(let trail of trailList){
+		if(trail !== null){
+			trail.update();
+			trail.draw(f);
+		}
+	}
 }
 
 let loop = setInterval(render, 1000/60);
