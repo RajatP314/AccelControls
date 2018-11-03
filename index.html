@@ -2,9 +2,23 @@
 <html>
 	<head>
 		<title>Game</title>
+		<style>
+html, body
+{
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    overflow: hidden;
+}
+canvas
+{
+    width: 100%;
+    height: 100%;
+}		
+		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;" width="600" height="600"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -13,8 +27,69 @@
   		<script src="https://scalarfield.github.io/js/tools/memekit.js"></script>
 		<script>
 
-let c = document.querySelector('canvas');
-let f = c.getContext('2d');
+class Trail{
+	constructor(x, y, xv, yv, size, color){
+		this.x = x;
+		this.y = y;
+		this.size = this.maxSize = size;
+		this.color = color;
+		this.xv = xv;
+		this.yv = yv;
+		this.ya = 1;
+		this.lifespan = 100;
+		this.age = 0;
+		this.imageList = [];
+		this.index;
+	}
+	
+	draw(ctx){
+		for(let img of this.imageList){
+		ctx.fillStyle = this.color;
+		ctx.globalAlpha = (1-img.a/100)/10;
+		if(this.age > 100){
+			ctx.globalAlpha = ((1-img.a/100)*0.1*(300-this.age)/200)
+		}
+		ctx.beginPath();
+		ctx.arc(img.x, img.y, img.r, 0, 2*Math.PI);
+		ctx.fill();
+		ctx.closePath(); 
+		}
+	}
+
+	update(){
+		if(this.age <= 100){
+			this.imageList.push( {x:this.x, y:this.y, r:this.size, a:this.age} );
+			this.size = this.maxSize * (1-this.age/100);
+		}
+		this.yv += this.ya;
+		this.y += this.yv;
+		this.x += this.xv;
+		this.age++;
+		if(this.age >= 300){
+			this.deleteFromList();
+		}
+	}
+
+	addToList(){
+		this.index = trailList.length;
+		trailList.push(this);
+	}
+
+	deleteFromList(){
+		trailList[this.index] = null;
+	}
+
+}
+
+c = document.querySelector('canvas');
+ let canvasElementStyle = window.getComputedStyle(c);
+    c.width = parseInt(canvasElementStyle.width);
+	c.height = parseInt(canvasElementStyle.height);
+f = c.getContext('2d');
+
+let chargeTimer = 0;
+let chargeTime = 150;
+let startCharge = false;
 
 let playerList = [];
 
@@ -49,15 +124,38 @@ socket.on('move', (n)=>{
 	}
 });
 
+socket.on('chargestart', (n)=>{
+	playerList[key].chargeStart = true;
+});
+			
+socket.on('chargestop', (n)=>{
+	playerList[n.key].chargeStart = false;
+	playerList[n.key].chargeTime = 0;
+});
+			
 class Player{
 	constructor(x, y, color){
 		this.x = x;
 		this.y = y;
 		this.color = color;
+		this.chargeStart = false;
+		this.chargeTimer = 150;
+		this.chargeTime = 0;
+	}
+	update(){
+		if(this.chargeStart && this.chargeTimer < this.chargeTime){
+			this.chargeTimer++;	
+		}
 	}
 	draw(ctx){
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x, this.y, 40, 40);
+		if(this.chargeStart){
+			ctx.globalAlpha = 0.2;
+			ctx.fillStyle = "black";
+			ctx.fillRect(this.x, this.y, 40, 40*chargeTime/chargeTimer);
+			ctx.globalAlpha = 1;
+		}
 	}
 }
 
