@@ -1,6 +1,6 @@
 <html>
 	<body style="margin:0px;">
-		<p id="output">Why, Varad?</p>
+		<p id="output">asdfghjkl</p>
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
@@ -10,6 +10,8 @@ console.log(socket);
 
 window.addEventListener('devicemotion', (event)=>{
 	document.getElementById('output').innerHTML = event.acceleration.x + "<br />" + event.acceleration.y + "<br />" + event.acceleration.z;
+	socket.emit('move', event.acceleration);
+	return false;
 });
 
 		</script>
