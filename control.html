@@ -1,6 +1,6 @@
 <html>
 	<body style="margin:0px;">
-		<p id="output">...</p>
+		<p id="output">placeholder</p>
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
@@ -18,10 +18,7 @@ c.ontouchend = c.onmouseup = ()=>{
          return false;
 }
 window.addEventListener('devicemotion', (event)=>{
-	document.getElementById('output').innerHTML =
-	`${event.acceleration.x}<br />
-	${event.acceleration.y}<br />
-	${event.acceleration.z}`;
+	document.getElementById('output').innerHTML = event.acceleration.x + "<br />" + event.acceleration.y + "<br />" + event.acceleration.z;
 })
 
 		</script>
