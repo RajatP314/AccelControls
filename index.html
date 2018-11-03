@@ -4,7 +4,7 @@
 		<title>Game</title>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;" width="600" height="600"></canvas>
+		<canvas style="background-color:pink;" width="600" height="600"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -39,6 +39,7 @@ socket.on('move', (n)=>{
 	if(yAngle < -90){yAngle = -90};
 	let xAngle = n.x-180;
 	if(xAngle > 90){xAngle = 90};
+	if(xAngle < 360 && xAngle > 180){xAngle = 180 - xAngle};
 	if(xAngle < -90){xAngle = -90};
 	y = 300 - yAngle*300/90;
 	x = 300 + xAngle*300/90;
