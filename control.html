@@ -1,6 +1,22 @@
 <html>
+	<head>
+		<style>			
+html, body
+{
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    overflow: hidden;
+}
+canvas
+{
+    width: 100%;
+    height: 100%;
+}			
+		</style>
+	</head>
 	<body style="margin:0px;">
-		<p id="output" style="color:blue;">asdfghjkl</p>
+		<canvas></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 
 		<script>
@@ -16,7 +32,37 @@ window.addEventListener('deviceorientation', (event)=>{
 	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma, key:key});
 	return false;
 });
+			
+let c = document.getElementById("canvas");
+    let canvasElementStyle = window.getComputedStyle(c);
+    c.width = parseInt(canvasElementStyle.width);
+c.height = parseInt(canvasElementStyle.height);
 
+let chargeTimer = 0;
+let chargeTime = 150;
+let startCharge = false;
+			
+ontouchstart = (event)=>{
+	startCharge = true;
+}
+
+ontouchend = (event)=>{
+	startCharge = false;
+	chargeTimer = 0;
+}
+
+let loop = setInterval(render, 1000/60);
+			
+function render(ctx){
+	if(startCharge){
+		f.fillStyle = `hsl(60*key, 70%, ${80*chargeTimer/chargeTime}%)`;
+		if(chargeTimer < chargeTime){
+			chargeTimer++;
+		}	
+	} else {
+		f.fillStyle = "black";
+	}
+}			
 		</script>
 
 	</body>
