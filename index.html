@@ -33,8 +33,8 @@ socket.on('keyout', (n)=>{
 });
 socket.on('move', (n)=>{
 	console.log(n);
-	xa = n.acceleration.x.toFixed(1);
-	ya = n.acceleration.z.toFixed(1);
+	xa = n.x.toFixed(1);
+	ya = n.z.toFixed(1);
 });
 
 function render(){
