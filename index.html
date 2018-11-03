@@ -22,7 +22,7 @@ let playerList = [];
 let socket = io();
 socket.on('newplayer', (n)=>{
 	if(playerList[n] === undefined){
-		playerList.push(new Player(300, 300, `hsl(${60*n}, 70%, 70%)` ));
+		playerList[n] = (new Player(300, 300, `hsl(${60*n}, 70%, 70%)` );
 	}
 });
 
