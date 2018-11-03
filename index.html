@@ -18,7 +18,7 @@ let f = c.getContext('2d');
 
 let playerList = [];
 
-			
+	 		
 let socket = io();
 socket.on('newplayer', (n)=>{
 	if(playerList[n] === undefined){
