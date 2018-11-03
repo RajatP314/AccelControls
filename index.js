@@ -27,6 +27,9 @@ io.on('connection', (socket)=>{
 	socket.on('keyout', (n)=>{
 		io.emit('keyout', n);
 	});
+	socket.on('move', (n)=>{
+		io.emit('move', n);	
+	});
 });
 
 http.listen((process.env.PORT || 8080), ()=>{
