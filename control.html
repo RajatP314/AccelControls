@@ -26,6 +26,7 @@ console.log(socket);
 
 let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
 socket.emit('newplayer', key);
+alert('emitted');
 			
 window.addEventListener('deviceorientation', (event)=>{
 	socket.emit('move', {x:event.alpha, y:event.beta, z:event.gamma, key:key});
