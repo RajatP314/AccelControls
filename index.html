@@ -13,6 +13,13 @@
   		<script src="https://scalarfield.github.io/js/tools/memekit.js"></script>
 		<script>
 
+let c = document.querySelector('canvas');
+let f = c.getContext('2d');
+
+let x = y = 300;
+let xv = yv = 0;
+let xa = ya = 0;
+			
 let socket = io();
 socket.on('keyin', (n)=>{
 	let e = new Event('keydown');
@@ -24,15 +31,10 @@ socket.on('keyout', (n)=>{
          e.which = e.keyCode = n;
          window.dispatchEvent(e);
 });
-		</script>
-		<script>
-
-let c = document.querySelector('canvas');
-let f = c.getContext('2d');
-
-let x = y = 300;
-let xv = yv = 0;
-let xa = ya = 0;
+socket.on('move', (n)=>{
+	xa = n.acceleration.x.toFixed(1);
+	ya = n.acceleration.z.toFixed(1);
+});
 
 function render(){
  f.clearRect(0, 0, 600, 600);
