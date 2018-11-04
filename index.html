@@ -32,6 +32,24 @@ onkeydown = (event)=>{
 	if(key === 32){
 		if(state === 0){
 			state = 1;
+		} else if(state === 2){
+			trailList = [];
+			ballList = [];
+			ballTimer = 0;
+			ballTime = 3;
+			time = 0;
+			ballx = 0;
+			gameTime = 1800;
+			timeLeft = 1800;
+			state = 0;
+			winner = {score: -1};
+			for(let p of playerList){
+				if(p !== null){
+					p.score = 0;	
+					p.rechargeTime = 0;
+				}
+			}
+			state = 1;	
 		}
 	}
 }
@@ -369,7 +387,7 @@ break;
 		f.fillText(`Player ${playerList.indexOf(winner)} wins!`, 20, 100);
 		f.font = "32px Courier";
 		f.fillStyle = "black";
-		f.fillText("Press space to restart", 20, 150);
+		f.fillText("Press space to restart", 20, 200);
 		break;
 	default:
 		break;
