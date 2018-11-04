@@ -88,8 +88,10 @@ class Ball{
 		this.x += this.xv;
 		if(this.x < 0 || this.x > c.width){
 			if(this.color !== "black"){
+				if(this.owner !== undefined){
 				this.owner.score++;
 				console.log("score up", this.owner.color);
+				}
 			}
 			this.deleteFromList();
 		}
