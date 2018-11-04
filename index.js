@@ -44,9 +44,6 @@ io.on('connection', (socket)=>{
 	socket.on('rr', (n)=>{
 		io.emit('rr', n);	
 	});
-	socket.on('vib', (n)=>{
-		io.emit('vib', n);	
-	});
 });
 
 http.listen((process.env.PORT || 8080), ()=>{
