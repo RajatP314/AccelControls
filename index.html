@@ -66,6 +66,12 @@ class Ball{
 		this.index;
 		this.color = "black";
 		this.owner;
+		if(Math.random() < 0.05){
+			this.bonus = true;
+			this.color = "gold";
+		} else {
+			this.bonus = false;	
+		}
 	}
 	update(c){
 		if(Math.abs(this.yv) < this.maxYV){
@@ -87,7 +93,7 @@ class Ball{
 	draw(ctx){
 		ctx.beginPath();
 		ctx.fillStyle = this.color;
-		ctx.arc(this.x, this.y, 5, 0, 2*Math.PI);
+		ctx.arc(this.x, this.y, this.bonus?15:5, 0, 2*Math.PI);
 		ctx.fill();
 		ctx.closePath()
 	}
@@ -147,7 +153,11 @@ class Trail{
 						ball.yv += Math.sign(this.yv);
 					}
 					ball.color = this.color;
-					this.owner.score++;
+					if(ball.bonus){
+						this.owner.score += 15;	
+					} else {
+						this.owner.score++;
+					}
 					ball.owner = this.owner;
 				}
 			}
