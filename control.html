@@ -25,7 +25,9 @@ let socket = io();
 console.log(socket);
 
 let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
-socket.emit('newplayer', key);
+if(key !== "rr"){
+	socket.emit('newplayer', key);
+}
 alert('emitted');
 			
 window.addEventListener('deviceorientation', (event)=>{
@@ -44,14 +46,22 @@ let chargeTime = 150;
 let startCharge = false;
 			
 ontouchstart = (event)=>{
-	startCharge = true;
-	socket.emit('chargestart', key);
+	if(key !== "rr"){
+		startCharge = true;
+		socket.emit('chargestart', key);
+	} else {
+		socket.emit('rr');	
+	}
 }
 
 ontouchend = (event)=>{
-	startCharge = false;
-	socket.emit('chargestop', {key:key, time: chargeTimer});
-	chargeTimer = 0;
+	if(key !== "rr"){
+		startCharge = false;
+		socket.emit('chargestop', {key:key, time: chargeTimer});
+		chargeTimer = 0;
+	} else {
+		socket.emit('rr');	
+	}
 }
 
 let loop = setInterval(render, 1000/60);
