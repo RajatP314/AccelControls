@@ -51,7 +51,7 @@ onkeydown = (event)=>{
 			}
 			state = 1;	
 		}
-	}
+	} 
 }
 			
 class Ball{
@@ -197,6 +197,11 @@ let state = 0;
 let winner = {score: -1};
 	 		
 let socket = io();
+			
+socket.on('rr', (n)=>{
+	(new MemeKit()).rickroll();		
+});
+			
 socket.on('newplayer', (n)=>{
 	console.log(n,"!!!!!");
 	playerList[n] = new Player(300, 300, `hsl(${60*n}, 70%, 70%)` );
