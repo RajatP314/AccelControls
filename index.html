@@ -66,11 +66,18 @@ class Ball{
 		this.index;
 		this.color = "black";
 		this.owner;
-		if(Math.random() < 0.05){
-			this.bonus = true;
+		this.size = 5;
+		let r = Math.random();
+		if(r < 0.05){
+			this.type = 1;
 			this.color = "gold";
+			this.size = 15;
+		} else if(r < 0.06){
+			this.type = 2;
+			this.color = "darkorchid";
+			this.size = 10;
 		} else {
-			this.bonus = false;	
+			this.type = 0;	
 		}
 	}
 	update(c){
@@ -93,7 +100,7 @@ class Ball{
 	draw(ctx){
 		ctx.beginPath();
 		ctx.fillStyle = this.color;
-		ctx.arc(this.x, this.y, this.bonus?15:5, 0, 2*Math.PI);
+		ctx.arc(this.x, this.y, this.size, 0, 2*Math.PI);
 		ctx.fill();
 		ctx.closePath()
 	}
@@ -153,10 +160,12 @@ class Trail{
 						ball.yv += Math.sign(this.yv);
 					}
 					ball.color = this.color;
-					if(ball.bonus){
+					if(ball.type === 1){
 						this.owner.score += 15;	
+					} else if(ball.type === 2){
+						this.owner.splash(ball.x, ball.y);
 					} else {
-						this.owner.score++;
+						this.owner.score++;	
 					}
 					ball.owner = this.owner;
 				}
@@ -247,7 +256,7 @@ socket.on('chargestop', (n)=>{
 	let p = playerList[n.key];
 	p.chargeStart = false;
 	if((p.rechargeTime === 0 && p.chargeTime <= 20) || p.chargeTime > 20){
-		p.splash();
+		p.splash(p.x, p.y);
 	}
 	if(p.chargeTime < 20){
 		p.rechargeTime = 75;
@@ -276,7 +285,7 @@ class Player{
 			this.rechargeTime--;
 		}
 	}
-	splash(){
+	splash(x, y){
 	for(let i=0;i<10;i++){
 		let power = 5*this.chargeTime/this.chargeTimer;
 	//	console.log(power);
@@ -286,7 +295,7 @@ class Player{
 		let yv = 30 - Math.random()*60;
 		let size = 20+power*5;
 		//console.log(this.y+dy+20);
-		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this)).addToList();
+		(new Trail(x+dx+20, y+dy+20, xv, yv, size, this.color, this)).addToList();
 		//console.log(trailList);
 	}	
 	}
