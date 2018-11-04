@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -253,7 +253,7 @@ for(let p of playerList){
 }
 let total = 0;
 if(scoreList.length > 0){
-	scoreList.reduce((a, b)=>a.score+b.score);
+	total = scoreList.reduce((a, b)=>a.score+b.score);
 }
 if(total !== 0){
  let y = 0;
@@ -270,13 +270,13 @@ for(let trail of trailList){
 			trail.draw(f);
 		}
 	}
+f.globalAlpha = 1;
  for(let p of playerList){
 	if(p !== null){
 		p.update();
 		p.draw(f);
 	}
  }
-f.globalAlpha = 1;
 	for(let ball of ballList){
 		if(ball !== null){
 			ball.update(c);
