@@ -25,7 +25,7 @@ let socket = io();
 console.log(socket);
 
 let key = parseInt((new URLSearchParams(window.location.search)).get('key'));
-if(key !== "rr"){
+if(key !== "65"){
 	socket.emit('newplayer', key);
 }
 alert('emitted');
@@ -46,7 +46,7 @@ let chargeTime = 150;
 let startCharge = false;
 			
 ontouchstart = (event)=>{
-	if(key !== "rr"){
+	if(key !== "65"){
 		startCharge = true;
 		socket.emit('chargestart', key);
 	} else {
@@ -55,7 +55,7 @@ ontouchstart = (event)=>{
 }
 
 ontouchend = (event)=>{
-	if(key !== "rr"){
+	if(key !== "65"){
 		startCharge = false;
 		socket.emit('chargestop', {key:key, time: chargeTimer});
 		chargeTimer = 0;
