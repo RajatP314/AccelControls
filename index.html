@@ -319,7 +319,7 @@ if(scoreList.length > 0){
 if(total !== 0){
  let y = 0;
  for(let s of scoreList){
-	console.log(c.height, s.score, total);
+	//console.log(c.height, s.score, total);
 	let h = c.height*s.score/total;
 	f.fillStyle = s.color;
 	f.globalAlpha = 1;
@@ -362,7 +362,7 @@ f.globalAlpha = 1;
 	f.globalAlpha=1;
 	if(timeLeft <= 0){
 		for(let p of playerList){
-			if(p.score > winner.score){
+			if(p !== null && p.score > winner.score){
 				winner = p;
 			}
 		}
