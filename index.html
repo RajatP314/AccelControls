@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -127,11 +127,11 @@ socket.on('move', (n)=>{
 
 socket.on('chargestart', (n)=>{
 	playerList[n].chargeStart = true;
-	playerList[n].splash();
 });
 			
 socket.on('chargestop', (n)=>{
 	playerList[n.key].chargeStart = false;
+	playerList[n].splash();
 	playerList[n.key].chargeTime = 0;
 	
 });
@@ -160,7 +160,7 @@ class Player{
 		let yv = 6*(power - Math.random()*2*power);
 		let size = power*10;
 		console.log(this.y+dy+20);
-		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this).addToList());
+		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this)).addToList();
 		console.log(trailList);
 	}	
 	}
