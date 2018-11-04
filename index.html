@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -289,12 +289,12 @@ f.globalAlpha = 1;
 	}
 	ballTimer++;
 	time++;
-	if(time%150===0){
-		ballx = c.width*Math.round(Math.random());	
+	if(time%75===0){
+		ballx = Math.round(c.width*Math.random());	
 	}
 	if(ballTimer >= ballTime){
 		ballTimer = 0;
-		(new Ball(ballx, 0)).addToList();
+		(new Ball(ballx+50-Math.round(Math.random()*100), 0)).addToList();
 	}
 }
 
