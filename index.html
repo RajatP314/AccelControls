@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -38,6 +38,7 @@ class Ball{
 		this.ya = 0.25;
 		this.index;
 		this.color = "black";
+		this.owner;
 	}
 	update(c){
 		if(Math.abs(this.yv) < this.maxYV){
@@ -45,8 +46,15 @@ class Ball{
 		}
 		this.y += this.yv;
 		this.x += this.xv;
-		if(this.x < 0 || this.x > c.width || this.y < 0 || this.y > c.height){
+		if(this.x < 0 || this.x > c.width){
+			if(this.color !== "black"){
+				this.owner.score++;
+				console.log("score up", this.owner.color);
+			}
 			this.deleteFromList();
+		}
+		if(this.y < 0 || this.y > c.height){
+			this.deleteFromList();	
 		}
 	}
 	draw(ctx){
@@ -113,6 +121,7 @@ class Trail{
 					}
 					ball.color = this.color;
 					this.owner.score++;
+					ball.owner = this.owner;
 				}
 			}
 		}
