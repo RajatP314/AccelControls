@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -31,6 +31,7 @@ class Trail{
 	constructor(x, y, xv, yv, size, color, owner){
 		this.x = x;
 		this.y = y;
+		console.log(this.y);
 		this.size = this.maxSize = size;
 		this.color = color;
 		this.xv = xv;
