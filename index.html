@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -182,7 +182,7 @@ trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 		trailList[i].index = i;
 	}
 f.globalAlpha = 1;
- f.clearRect(0, 0, 600, 600);
+ f.clearRect(0, 0, c.width, c.height);
  for(let p of playerList){
 	if(p !== null){
 		p.update();
