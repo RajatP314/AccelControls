@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -69,7 +69,7 @@ class Trail{
 	constructor(x, y, xv, yv, size, color, owner){
 		this.x = x;
 		this.y = y;
-		console.log(this.y);
+		//console.log(this.y);
 		this.size = this.maxSize = size;
 		this.color = color;
 		this.xv = xv;
@@ -259,9 +259,10 @@ if(total !== 0){
  let y = 0;
  for(let s of scoreList){
 	let h = c.height*s.score/total;
-	f.fillStyle = s.color;
+	f.fillStyle = "black";
+	f.globalAlpha = 1;
 	f.fillRect(0, y, 20, h);
-	 console.log('got here');
+	// console.log('got here');
 	y += h;
  }
 }
