@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -217,9 +217,9 @@ class Player{
 		let xv = 3*(power - Math.random()*2*power);
 		let yv = 6*(power - Math.random()*2*power);
 		let size = power*10;
-		console.log(this.y+dy+20);
+		//console.log(this.y+dy+20);
 		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this)).addToList();
-		console.log(trailList);
+		//console.log(trailList);
 	}	
 	}
 	draw(ctx){
@@ -257,11 +257,11 @@ if(scoreList.length > 0){
 }
 if(total !== 0){
  let y = 0;
-console.log(scoreList);
- for(let score of scoreList){
-	let h = c.height*score.score/total;
-	f.fillStyle = score.color;
+ for(let s of scoreList){
+	let h = c.height*s.score/total;
+	f.fillStyle = s.color;
 	f.fillRect(0, y, 20, h);
+	 console.log('got here');
 	y += h;
  }
 }
