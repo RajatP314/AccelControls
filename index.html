@@ -164,6 +164,7 @@ class Trail{
 						this.owner.score += 15;	
 					} else if(ball.type === 2){
 						this.owner.splash(ball.x, ball.y);
+						ball.deleteFromList();
 					} else {
 						this.owner.score++;	
 					}
