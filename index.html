@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -199,7 +199,7 @@ socket.on('chargestart', (n)=>{
 socket.on('chargestop', (n)=>{
 	let p = playerList[n.key];
 	p.chargeStart = false;
-	if(p.rechargeTime === 0 || p.chargeTime > 20){
+	if((p.rechargeTime === 0 && p.chargeTime <= 20) || p.chargeTime > 20){
 		p.splash();
 	}
 	if(p.chargeTime < 20){
@@ -225,7 +225,7 @@ class Player{
 		if(this.chargeStart && this.chargeTime < this.chargeTimer){
 			this.chargeTime++;	
 		}
-		if(!this.chargeStart && this.rechargeTime > 0){
+		if(this.rechargeTime > 0){
 			this.rechargeTime--;
 		}
 	}
