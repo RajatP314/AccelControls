@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -131,7 +131,7 @@ socket.on('chargestart', (n)=>{
 			
 socket.on('chargestop', (n)=>{
 	playerList[n.key].chargeStart = false;
-	playerList[n].splash();
+	playerList[n.key].splash();
 	playerList[n.key].chargeTime = 0;
 	
 });
