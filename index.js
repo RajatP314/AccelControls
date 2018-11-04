@@ -22,7 +22,6 @@ io.on('connection', (socket)=>{
 	console.log('User connected');
 	socket.on('disconnect', (socket)=>{
 		console.log('User disconnected');
-		io.emit('dcplayer', playerCount-1);
 	});
 	socket.on('keyin', (n)=>{
 		io.emit('keyin', n);
