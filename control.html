@@ -50,7 +50,7 @@ ontouchstart = (event)=>{
 		startCharge = true;
 		socket.emit('chargestart', key);
 	} else {
-		socket.emit('rr');	
+		socket.emit('rr', null);	
 	}
 }
 
@@ -60,7 +60,7 @@ ontouchend = (event)=>{
 		socket.emit('chargestop', {key:key, time: chargeTimer});
 		chargeTimer = 0;
 	} else {
-		socket.emit('rr');	
+		socket.emit('rr', null);	
 	}
 }
 
