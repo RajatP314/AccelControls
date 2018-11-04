@@ -59,6 +59,7 @@ ontouchend = (event)=>{
 		startCharge = false;
 		socket.emit('chargestop', {key:key, time: chargeTimer});
 		chargeTimer = 0;
+		navigator.vibrate(200);
 	} else {
 		socket.emit('rr', null);	
 	}
