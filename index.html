@@ -197,7 +197,7 @@ socket.on('chargestart', (n)=>{
 });
 			
 socket.on('chargestop', (n)=>{
-	let p = playerListey];
+	let p = playerList[n.key];
 	p.chargeStart = false;
 	if(p.rechargeTime === 0){
 		p.splash();
