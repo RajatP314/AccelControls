@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -340,7 +340,7 @@ f.globalAlpha = 1;
 let scoreList = [];
 for(let p of playerList){
 	if(p !== null){
-		scoreList.push({score:p.score, color:p.color});
+		scoreList.push({score:Math.abs(p.score), color:p.color, sign:Math.sign(p.score)});
 	}
 }
 let total = 0;
@@ -354,6 +354,9 @@ if(total !== 0){
 	//console.log(c.height, s.score, total);
 	let h = c.height*s.score/total;
 	f.fillStyle = s.color;
+	if(s.sign === -1){
+		f.fillStyle = s.color.replace(/70/g, "40");	
+	}
 	f.globalAlpha = 1;
 	f.fillRect(0, y, 20, h);
 	y += h;
