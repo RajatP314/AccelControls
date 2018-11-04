@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -120,8 +120,8 @@ socket.on('move', (n)=>{
 		if(xAngle < -90){xAngle = -90};
 	}
 	if(playerList[n.key] !== null){
-		playerList[n.key].y = 300 - yAngle*300/90;
-		playerList[n.key].x = 300 - xAngle*300/90;
+		playerList[n.key].y = c.height/2 - yAngle*c.height/180;
+		playerList[n.key].x = c.width/2 - xAngle*c.width/180;
 	}
 });
 
@@ -177,7 +177,7 @@ class Player{
 }
 
 function render(){
-trailList = trailList.filter((a)=>a!==null);
+trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 	for(let i=0;i<trailList.length;i++){
 		trailList[i].index = i;
 	}
