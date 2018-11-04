@@ -216,7 +216,7 @@ let ballx = 0;
 let gameTime = 1800;
 let timeLeft = 1800;
 let state = 0;
-let winner = {score: -1};
+let winner = {score: -Infinity};
 	 		
 let socket = io();
 			
@@ -410,8 +410,9 @@ break;
 	f.fillText("Aim by tilting the phone", 20, 150);
 	f.fillText("Charge up and shoot to color the falling orbs", 20, 200);
 	f.fillText("Extra points for deflecting orbs to hit the sides", 20, 250);
+	f.fillText("Touching the orbs with your pointer loses you points", 20, 300);
 	f.fillStyle = "darkred";
-	f.fillText("Press SPACE to begin", 20, 300);
+	f.fillText("Press SPACE to begin", 20, 400);
 		break;
 	case 2:
 		f.font = "72px Courier";
