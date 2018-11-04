@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -27,6 +27,44 @@ canvas
   		<script src="https://scalarfield.github.io/js/tools/memekit.js"></script>
 		<script>
 
+class Ball{
+	constructor(x, y){
+		this.x = x;
+		this.y = y;
+		this.maxYV = 5;
+		this.maxXV = 20;
+		this.xv = 0;
+		this.yv = 0;
+		this.ya = 0.25;
+		this.index;
+		this.color = "black";
+	}
+	update(c){
+		if(Math.abs(this.yv) < this.maxYV){
+			this.yv += this.ya;
+		}
+		this.y += this.yv;
+		this.x += this.xv;
+		if(this.x < 0 || this.x > c.width || this.y < 0 || this.y > c.height){
+			this.deleteFromList();
+		}
+	}
+	draw(ctx){
+		ctx.beginPath();
+		ctx.fillStyle = this.color;
+		ctx.arc(this.x, this.y, 5, 0, 2*Math.PI);
+		ctx.fill();
+		ctx.closePath()
+	}
+	addToList(){
+		this.index = ballList.length;
+		ballList.push(this);
+	}
+	deleteFromList(){
+		ballList[this.index] = null;
+	}
+}			
+			
 class Trail{
 	constructor(x, y, xv, yv, size, color, owner){
 		this.x = x;
@@ -63,6 +101,19 @@ class Trail{
 		if(this.age <= 100){
 			this.imageList.push( {x:this.x, y:this.y, r:this.size, a:this.age} );
 			this.size = this.maxSize * (1-this.age/100);
+			for(let ball of ballList){
+				let dx = ball.x - this.x, dy = ball.y - this.y;
+				let ds = dx**2 + dy**2;
+				if(ds <= this.size**2){
+					if(Math.abs(ball.xv) < ball.maxXV){
+						ball.xv += Math.sign(this.xv);
+					}
+					if(Math.abs(ball.yv) < ball.maxYV){
+						ball.yv += Math.sign(this.yv);
+					}
+					ball.color = this.color;
+				}
+			}
 		}
 		this.yv += this.ya;
 		this.y += this.yv;
@@ -96,6 +147,11 @@ let startCharge = false;
 
 let playerList = [];
 let trailList = [];
+let ballList = [];
+			
+let ballTimer = 0;
+let ballTime = 3;
+let time = 0;
 	 		
 let socket = io();
 socket.on('newplayer', (n)=>{
@@ -181,6 +237,10 @@ trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 	for(let i=0;i<trailList.length;i++){
 		trailList[i].index = i;
 	}
+	ballList = ballList.filter((a)=>a!==null);
+	for(let i=0;i<ballList.length;i++){
+		ballList[i].index = i;
+	}
 f.globalAlpha = 1;
  f.clearRect(0, 0, c.width, c.height);
  for(let p of playerList){
@@ -194,6 +254,19 @@ f.globalAlpha = 1;
 			trail.update();
 			trail.draw(f);
 		}
+	}
+f.globalAlpha = 1;
+	for(let ball of ballList){
+		if(ball !== null){
+			ball.update(c);
+			ball.draw(f);
+		}
+	}
+	ballTimer++;
+	time++;
+	if(ballTimer >= ballTime){
+		ballTimer = 0;
+		(new Ball(c.width/2 + Math.cos(time/100)*c.width/2 + 50-Math.random()*100, 0)).addToList();
 	}
 }
 
