@@ -112,6 +112,7 @@ class Trail{
 						ball.yv += Math.sign(this.yv);
 					}
 					ball.color = this.color;
+					this.owner.score++;
 				}
 			}
 		}
@@ -200,6 +201,7 @@ class Player{
 		this.chargeStart = false;
 		this.chargeTimer = 150;
 		this.chargeTime = 0;
+		this.score = 0;
 	}
 	update(){
 		if(this.chargeStart && this.chargeTime < this.chargeTimer){
@@ -243,18 +245,34 @@ trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 	}
 f.globalAlpha = 1;
  f.clearRect(0, 0, c.width, c.height);
+let scoreList = [];
+for(let p of playerList){
+	if(p !== null){
+		scoreList.push({score:p.score, color:p.color});
+	}
+}
+total = scoreList.reduce((a, b)=>a.score+b.score));
+if(total !== 0){
+ let y = 0;
+ for(let score of scoreList){
+	let h = c.height*score.score/total;
+	f.fillStyle = score.color;
+	f.fillRect(0, y, 20, h);
+	y += h;
+ }
+}
+for(let trail of trailList){
+		if(trail !== null){
+			trail.update();
+			trail.draw(f);
+		}
+	}
  for(let p of playerList){
 	if(p !== null){
 		p.update();
 		p.draw(f);
 	}
  }
-	for(let trail of trailList){
-		if(trail !== null){
-			trail.update();
-			trail.draw(f);
-		}
-	}
 f.globalAlpha = 1;
 	for(let ball of ballList){
 		if(ball !== null){
