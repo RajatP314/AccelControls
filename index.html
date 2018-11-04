@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -197,9 +197,15 @@ socket.on('chargestart', (n)=>{
 });
 			
 socket.on('chargestop', (n)=>{
-	playerList[n.key].chargeStart = false;
-	playerList[n.key].splash();
-	playerList[n.key].chargeTime = 0;
+	let p = playerListey];
+	p.chargeStart = false;
+	if(p.rechargeTime === 0){
+		p.splash();
+	}
+	if(p.chargeTime < 10){
+		p.rechargeTime = 75;
+	}
+	p.chargeTime = 0;
 	
 });
 			
@@ -212,10 +218,15 @@ class Player{
 		this.chargeTimer = 150;
 		this.chargeTime = 0;
 		this.score = 0;
+		this.rechargeTimer = 75;
+		this.rechargeTime = 0;
 	}
 	update(){
 		if(this.chargeStart && this.chargeTime < this.chargeTimer){
 			this.chargeTime++;	
+		}
+		if(!this.chargeStart && this.rechargeTime > 0){
+			this.rechargeTime--;
 		}
 	}
 	splash(){
@@ -240,6 +251,11 @@ class Player{
 			ctx.fillStyle = "black";
 			ctx.fillRect(this.x, this.y, 40, 40*this.chargeTime/this.chargeTimer);
 			ctx.globalAlpha = 1;
+		} else if(this.rechargeTime > 0){
+			ctx.globalAlpha = 0.1;
+			ctx.fillStyle = "black";
+			ctx.fillRect(this.x, this.y, 40*this.rechargeTime/this.rechargeTimer, 40);
+			ctx.globalAlpha = 1;	
 		}
 	}
 }
