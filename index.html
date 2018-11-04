@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:gray;"></canvas>
+		<canvas style="background-color:white;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -153,6 +153,7 @@ let ballList = [];
 let ballTimer = 0;
 let ballTime = 3;
 let time = 0;
+let ballx = 0;
 	 		
 let socket = io();
 socket.on('newplayer', (n)=>{
@@ -214,9 +215,9 @@ class Player{
 	//	console.log(power);
 		let dx = power - Math.random()*2*power;
 		let dy = power - Math.random()*2*power;
-		let xv = 3*(power - Math.random()*2*power);
-		let yv = 6*(power - Math.random()*2*power);
-		let size = power*10;
+		let xv = 15 - Math.random()*30;
+		let yv = 30* - Math.random()*60;
+		let size = 20+power*5;
 		//console.log(this.y+dy+20);
 		(new Trail(this.x+dx+20, this.y+dy+20, xv, yv, size, this.color, this)).addToList();
 		//console.log(trailList);
@@ -288,9 +289,12 @@ f.globalAlpha = 1;
 	}
 	ballTimer++;
 	time++;
+	if(time%150===0){
+		ballx = c.width*Math.round(Math.random());	
+	}
 	if(ballTimer >= ballTime){
 		ballTimer = 0;
-		(new Ball(c.width/2 + Math.cos(time/100)*c.width/2 + 50-Math.random()*100, 0)).addToList();
+		(new Ball(ballx, 0)).addToList();
 	}
 }
 
