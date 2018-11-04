@@ -65,7 +65,8 @@ ontouchend = (event)=>{
 }
 
 socket.on('vib', (n)=>{
-	navigator.vibrate(n);	
+	alert('hi');
+	navigator.vibrate(200);	
 });
 
 let loop = setInterval(render, 1000/60);
