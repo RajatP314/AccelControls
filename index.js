@@ -42,6 +42,9 @@ io.on('connection', (socket)=>{
 	socket.on('chargestop', (n)=>{
 		io.emit('chargestop', n);	
 	});
+	socket.on('rr', (n)=>{
+		io.emit('rr', n);	
+	});
 });
 
 http.listen((process.env.PORT || 8080), ()=>{
