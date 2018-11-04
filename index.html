@@ -286,6 +286,12 @@ class Player{
 		if(this.rechargeTime > 0){
 			this.rechargeTime--;
 		}
+		for(let ball of ballList){
+			if(ball.color !== this.color && ball.x > this.x && ball.x < this.x + 40 && ball.y > this.y && ball.y < this.y+40){
+				this.score--;
+				ball.color = this.color.replace(/70/g, '50');
+			}
+		}
 	}
 	splash(x, y){
 	for(let i=0;i<10;i++){
