@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -27,6 +27,15 @@ canvas
   		<script src="https://scalarfield.github.io/js/tools/memekit.js"></script>
 		<script>
 
+onkeydown = (event)=>{
+	let key = event.which || event.charCode;
+	if(key === 32){
+		if(state === 0){
+			state = 1;
+		}
+	}
+}
+			
 class Ball{
 	constructor(x, y){
 		this.x = x;
@@ -163,6 +172,10 @@ let ballTimer = 0;
 let ballTime = 3;
 let time = 0;
 let ballx = 0;
+			
+let gameTime = 1800;
+let timeLeft = 1800;
+let state = 0;
 	 		
 let socket = io();
 socket.on('newplayer', (n)=>{
@@ -261,6 +274,9 @@ class Player{
 }
 
 function render(){
+ f.clearRect(0, 0, c.width, c.height);
+switch(state){
+	case 1:
 trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 	for(let i=0;i<trailList.length;i++){
 		trailList[i].index = i;
@@ -270,7 +286,6 @@ trailList = trailList.filter((a)=>a!==null&&a!==undefined);
 		ballList[i].index = i;
 	}
 f.globalAlpha = 1;
- f.clearRect(0, 0, c.width, c.height);
 let scoreList = [];
 for(let p of playerList){
 	if(p !== null){
@@ -321,6 +336,32 @@ f.globalAlpha = 1;
 		ballTimer = 0;
 		(new Ball(ballx+50-Math.round(Math.random()*100), 0)).addToList();
 	}
+	timeLeft--;
+	f.fillStyle="black"
+	f.globalAlpha=0.2;
+	f.fillRect(c.width-20, 0, 20, c.height*timeLeft/gameTime);
+	f.globalAlpha=1;
+	if(timeLeft <= 0){
+		state = 2;
+	}
+break;
+	case 0:
+		f.font = "72px Courier";
+	f.fillStyle = "black";
+	f.fillText("Colors", 20, 100);
+	f.font = "32px Courier";
+	f.fillStyle = "navy";
+	f.fillText("Aim by tilting the phone", 20, 150);
+	f.fillText("Charge up and shoot to color the falling orbs", 20, 200);
+	f.fillText("Extra points for deflecting orbs to hit the sides", 20, 250);
+	f.fillStyle = "darkred";
+	f.fillText("Press SPACE to begin", 20, 300);
+		break;
+	case 2:
+		break;
+	default:
+		break;
+}
 }
 
 let loop = setInterval(render, 1000/60);
