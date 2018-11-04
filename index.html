@@ -18,7 +18,7 @@ canvas
 		</style>
 	</head>
 	<body style="margin:0px;background-color:navy;">
-		<canvas style="background-color:white;"></canvas>
+		<canvas style="background-color:gray;"></canvas>
 		<script src="/socket.io/socket.io.js"></script>
 		<script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -258,11 +258,11 @@ if(scoreList.length > 0){
 if(total !== 0){
  let y = 0;
  for(let s of scoreList){
+	console.log(c.height, s.score, total);
 	let h = c.height*s.score/total;
 	f.fillStyle = "black";
 	f.globalAlpha = 1;
 	f.fillRect(0, y, 20, h);
-	console.log(y, h);
 	y += h;
  }
 }
