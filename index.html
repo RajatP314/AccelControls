@@ -265,7 +265,7 @@ socket.on('chargestop', (n)=>{
 		p.rechargeTime = 37;
 	}
 	p.chargeTime = 0;
-	
+	socket.emit('vibrate', 200);
 });
 			
 class Player{
